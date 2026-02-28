@@ -145,10 +145,12 @@
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                              url('https://images.unsplash.com/photo-1596178067639-5c6e68ae69b0?q=80&w=1080');
         }
 
         .hero-desktop {
-            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), 
+            background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)),
                               url('https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?q=80&w=1920');
         }
 
@@ -482,38 +484,194 @@
             opacity: 0.4;
         }
 
+        /* Mobile Navigation */
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 3px;
+            background: var(--text);
+            border-radius: 2px;
+            transition: var(--transition);
+        }
+
+        .mobile-menu-btn.active span:nth-child(1) {
+            transform: rotate(45deg) translate(7px, 7px);
+        }
+
+        .mobile-menu-btn.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .mobile-menu-btn.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
         @media (max-width: 768px) {
-            .nav-links, header .btn {
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            header .btn {
                 display: none;
             }
 
-            .hero {
-                background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                                  url('https://images.unsplash.com/photo-1596178067639-5c6e68ae69b0?q=80&w=1080');
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 80%;
+                max-width: 300px;
+                height: 100vh;
+                background: var(--white);
+                flex-direction: column;
+                padding: 80px 30px;
+                gap: 20px;
+                box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+                transition: var(--transition);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .nav-links a {
+                font-size: 18px;
+                padding: 10px 0;
+                border-bottom: 1px solid var(--primary-light);
             }
 
             .hero h1 {
-                font-size: 42px;
+                font-size: 32px;
+            }
+
+            .hero p {
+                font-size: 16px;
             }
 
             .hero-btns {
                 flex-direction: column;
+                gap: 10px;
+                align-items: center;
+            }
+
+            .hero-btns .btn {
+                width: auto;
+                min-width: 200px;
+                padding: 14px 28px;
+                font-size: 12px;
             }
 
             .contact-wrapper {
                 grid-template-columns: 1fr;
+                gap: 30px;
             }
 
             .about-flex {
                 flex-direction: column-reverse;
+                gap: 30px;
+            }
+
+            .about-image {
+                height: 300px;
+                width: 100%;
             }
 
             .booking-form {
                 padding: 30px 20px;
             }
-            
+
             section {
                 padding: 60px 0;
+            }
+
+            .section-title h2 {
+                font-size: 28px;
+            }
+
+            .services-tabs {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+
+            .portfolio-item {
+                height: 200px;
+            }
+
+            .portfolio-overlay {
+                font-size: 12px;
+                letter-spacing: 0.5px;
+            }
+
+            .stats {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+
+            .benefits-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+
+            .benefit-card {
+                padding: 20px 15px;
+            }
+
+            .benefit-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+
+            .benefit-card h3 {
+                font-size: 14px;
+            }
+
+            .benefit-card p {
+                font-size: 12px;
+            }
+
+            .reviews-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .map-placeholder {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .portfolio-item {
+                height: 250px;
+            }
+
+            .benefits-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pricing-table {
+                padding: 25px 20px;
+            }
+
+            .pricing-row {
+                font-size: 14px;
             }
         }
     </style>
@@ -533,6 +691,11 @@
                     <li><a href="#contacts">Контакты</a></li>
                 </ul>
                 <a href="#booking" class="btn btn-primary" style="padding: 10px 20px; font-size: 11px;">Записаться</a>
+                <div class="mobile-menu-btn" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
             </nav>
         </div>
     </header>
@@ -690,7 +853,7 @@
                     <div class="portfolio-overlay">Макияж</div>
                 </div>
                 <div class="portfolio-item">
-                    <img src="https://images.unsplash.com/photo-1591343395902-1adcb454c2e7" alt="Facial Treatment">
+                    <img src="https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?q=80&w=800" alt="Facial Treatment">
                     <div class="portfolio-overlay">Уход</div>
                 </div>
                 <div class="portfolio-item">
@@ -843,7 +1006,7 @@
                         <label>Комментарий (опционально)</label>
                         <textarea rows="3" placeholder="Ваши пожелания..."></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary" style="width: 100%;">Отправить</button>
+                    <button type="submit" class="btn btn-primary" style="width: auto; min-width: 200px; padding: 14px 28px;">Отправить</button>
                 </form>
             </div>
         </div>
@@ -860,6 +1023,23 @@
             <p class="copyright">&copy; 2024 Beauty Glow Salon. Все права защищены.</p>
         </div>
     </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const menuBtn = document.querySelector('.mobile-menu-btn');
+            navLinks.classList.toggle('active');
+            menuBtn.classList.toggle('active');
+        }
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-links').classList.remove('active');
+                document.querySelector('.mobile-menu-btn').classList.remove('active');
+            });
+        });
+    </script>
 
 </body>
 </html>
